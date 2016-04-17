@@ -15,3 +15,5 @@ app.use('/graphql', GraphHTTP({
 app.listen(APP_PORT, () => {
   console.log(`App listening on port ${APP_PORT}`); // eslint-disable-line no-console
 });
+
+// ./node_modules/babel-cli/bin/babel-node.js server.js
