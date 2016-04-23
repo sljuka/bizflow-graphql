@@ -58,7 +58,7 @@ const Mutation = new GraphQLObjectType({
           }
         },
         resolve(_, args) {
-          return Db.models.person.create({
+          return Db.models.user.create({
             firstName: args.firstName,
             lastName: args.lastName,
             email: args.email
