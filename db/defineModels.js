@@ -1,11 +1,13 @@
-import defineUser from './user';
+import defineAction from './action';
+import defineNextAction from './nextAction';
 import definePost from './post';
 import defineProcess from './process';
-import defineAction from './action';
 import defineTask from './task';
+import defineUser from './user';
 
 export default function(Conn) {
   const Action = defineAction(Conn);
+  const NextAction = defineNextAction(Conn);
   const Post = definePost(Conn);
   const Process = defineProcess(Conn);
   const Task = defineTask(Conn);
@@ -14,7 +16,9 @@ export default function(Conn) {
   // Relationships
   Action.belongsTo(Process);
   Action.hasMany(Task);
-  Action.belongsToMany(Action, { as: 'NextActions', through: 'nextActions' });
+  Action.hasMany(NextAction);
+  NextAction.belongsTo(Action);
+  NextAction.belongsTo(Action, {as: 'nextAction'});
   Post.belongsTo(User);
   Process.hasMany(Action);
   Task.belongsTo(Action);
