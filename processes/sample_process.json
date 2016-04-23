@@ -1,7 +1,7 @@
 {
   "name": "Sample process",
   "description": "This is a sample process",
-  "startAction": "CheckSupplies",
+  "startAction": "Check supplies",
   "actions": [
     {
       "name": "Check supplies",
@@ -51,7 +51,6 @@
     {
       "name": "Serve breakfast",
       "type": "task",
-      "nextAction": null,
       "tasks": [
         {
           "name": "Prepare table",

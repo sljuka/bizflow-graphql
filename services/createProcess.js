@@ -3,20 +3,33 @@ import Sequelize from 'sequelize';
 import Db from '../db';
 
 let createdActions = [];
+let currentProcess = null;
 
 export default function createProcess(Process, processMetaData) {
-  return Db.transaction({
-    type: Sequelize.Transaction.EXCLUSIVE
-  }, function () {
 
-    const {name, description, actions} = processMetaData;
+  return Db.transaction({type: Sequelize.Transaction.EXCLUSIVE}, () => {
+    const {name, description, actions, startAction} = processMetaData;
 
     return Process.create({
       name: name,
       description: description
     })
+    .then(pcss => setCurrentProcess(pcss))
     .then(pcss => createActions(pcss, actions))
+    .then(() => setProcessStartAction(startAction))
     .then(() => linkActions(actions, createdActions));
+  });
+}
+
+function setCurrentProcess(pcss) {
+  currentProcess = pcss;
+  return pcss;
+}
+
+function setProcessStartAction(startAction) {
+  const action = createdActions.filter(item => item.dataValues.name === startAction)[0];
+  return currentProcess.update({
+    startActionId: action.dataValues.id
   });
 }
 
@@ -84,7 +97,6 @@ function linkActions(actionsMeta, createdActions) {
         nextActionId: persistedNextAction.dataValues.id
       });
     }
-
   });
 
   return Promise.all(promises);

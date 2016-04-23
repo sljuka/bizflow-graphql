@@ -13,6 +13,4 @@ const Conn = new Sequelize(
 
 defineModels(Conn);
 
-// Conn.sync({force: true});
-
 export default Conn;
