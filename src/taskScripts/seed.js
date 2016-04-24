@@ -1,4 +1,4 @@
-import Conn from './db';
+import Conn from '../db';
 import _ from 'lodash';
 import Faker from 'faker';
 
