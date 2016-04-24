@@ -62,14 +62,14 @@ export default function createProcess(Process, processMetaData) {
     const promises = actionsMeta.map((actionMeta) => {
       const {name, nextActions, nextAction} = actionMeta;
 
-      const currentAction = createdActions.filter((item) => item.dataValues.name === name)[0];
+      const currentAction = createdActions.find((item) => item.dataValues.name === name);
 
       if (nextAction && nextActions) throw 'nextAction and nextActions, only one of these can be defined';
 
       if (nextActions) {
         const promises = Object.keys(nextActions).map((key) => {
           const nextActionName = nextActions[key];
-          const persistedNextAction = createdActions.filter(item => item.dataValues.name === nextActionName)[0];
+          const persistedNextAction = createdActions.find(item => item.dataValues.name === nextActionName);
 
           return currentAction.createNextAction({
             key,
@@ -81,7 +81,7 @@ export default function createProcess(Process, processMetaData) {
       }
 
       if (nextAction) {
-        const persistedNextAction = createdActions.filter((item) => item.dataValues.name === nextAction)[0];
+        const persistedNextAction = createdActions.find((item) => item.dataValues.name === nextAction);
 
         return currentAction.createNextAction({
           nextActionId: persistedNextAction.dataValues.id
