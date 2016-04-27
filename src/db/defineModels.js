@@ -34,14 +34,16 @@ export default function(Conn) {
   NextAction.belongsTo(Action);
   Post.belongsTo(User);
   Process.hasMany(Action);
+  Process.hasMany(ProcessInstance);
   ProcessInstance.belongsTo(User, {as: 'creator'});
   ProcessInstance.hasMany(ActionInstance);
   ProcessInstance.hasOne(ActionHead);
+  ProcessInstance.belongsTo(Process);
   Task.belongsTo(Action);
   TaskInstance.belongsTo(ActionInstance);
   TaskInstance.belongsTo(User, {as: 'assignee'});
   TaskInstance.belongsTo(User, {as: 'assigner'});
   User.hasMany(Post);
-  User.hasMany(ProcessInstance, {as: 'createdProcesses'});
-  User.hasMany(Task, {as: 'assignedTasks', foreignKey: 'assigneeId'});
+  User.hasMany(ProcessInstance, {as: 'createdProcesses', foreignKey: 'creatorId'});
+  User.hasMany(TaskInstance, {as: 'assignedTasks', foreignKey: 'assigneeId'});
 }
