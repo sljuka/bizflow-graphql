@@ -17,8 +17,8 @@ export default function createProcessInstance(Process, pcssId, userId, additiona
 
     const dbActions = await dbProcess.getActions();
 
-    for (let i = 0; i < dbActions.length; i++) {
-      const {id: actionId, type, name, description} = dbActions[i].dataValues;
+    for (const dbAction of dbActions) {
+      const {id: actionId, type, name, description} = dbAction.dataValues;
 
       const actionInstance = await dbProcessInstance.createActionInstance({
         actionId,
@@ -26,12 +26,12 @@ export default function createProcessInstance(Process, pcssId, userId, additiona
         name,
         description
       });
-      
-      const dbTasks = await dbActions[i].getTasks();
+
+      const dbTasks = await dbAction.getTasks();
       if (dbTasks.length === 0) continue;
 
-      for (let j = 0; j < dbTasks.length; j++) {
-        const { id: taskId, name, description } = dbTasks[j].dataValues;
+      for (const dbTask of dbTasks) {
+        const { id: taskId, name, description } = dbTask.dataValues;
 
         await actionInstance.createTaskInstance({
           taskId,
