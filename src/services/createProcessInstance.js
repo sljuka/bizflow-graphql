@@ -17,30 +17,36 @@ export default function createProcessInstance(Process, pcssId, userId, additiona
 
     const dbActions = await dbProcess.getActions();
 
-    const actionPromises = dbActions.map(async function(dbAction) {
-      const {id: actionId, type, name, description} = dbAction.dataValues;
+    await createActionInstances(dbProcessInstance, dbActions);
 
-      const dbActionInstance = await dbProcessInstance.createActionInstance({
-        actionId,
-        type,
+    // next actions...
+  });
+}
+
+function createActionInstances(processInstance, actions) {
+  const actionPromises = actions.map(async function(dbAction) {
+    const {id: actionId, type, name, description} = dbAction.dataValues;
+
+    const dbActionInstance = await processInstance.createActionInstance({
+      actionId,
+      type,
+      name,
+      description
+    });
+
+    const dbTasks = await dbAction.getTasks();
+    const taskPromises = dbTasks.map(async function(dbTask) {
+      const { id: taskId, name, description } = dbTask.dataValues;
+
+      await dbActionInstance.createTaskInstance({
+        taskId,
         name,
         description
       });
-
-      const dbTasks = await dbAction.getTasks();
-      const taskPromises = dbTasks.map(async function(dbTask) {
-        const { id: taskId, name, description } = dbTask.dataValues;
-
-        await dbActionInstance.createTaskInstance({
-          taskId,
-          name,
-          description
-        });
-      });
-
-      await Promise.all(taskPromises);
     });
 
-    await Promise.all(actionPromises);
+    await Promise.all(taskPromises);
   });
+
+  return Promise.all(actionPromises);
 }
