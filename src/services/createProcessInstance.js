@@ -20,6 +20,8 @@ export default function createProcessInstance({ processModel, pcssId, userId, ad
     await createActionInstances(dbProcessInstance, dbActions);
 
     // next actions...
+
+    return dbProcessInstance;
   });
 }
 

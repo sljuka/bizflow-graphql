@@ -10,6 +10,7 @@ import Db from '../db';
 import Post from './post';
 import User from './user';
 import Process from './process';
+import ProcessInstance from './processInstance';
 import createProcessInstance from '../services/createProcessInstance';
 
 const Query = new GraphQLObjectType({
@@ -22,9 +23,6 @@ const Query = new GraphQLObjectType({
         args: {
           id: {
             type: GraphQLInt
-          },
-          email: {
-            type: GraphQLString
           }
         },
         resolve(root, args) {
@@ -40,7 +38,13 @@ const Query = new GraphQLObjectType({
       processes: {
         type: new GraphQLList(Process),
         resolve(root, args) {
-          return Db.models.post.findAll({ where: args });
+          return Db.models.process.findAll({ where: args });
+        }
+      },
+      processInstances: {
+        type: new GraphQLList(ProcessInstance),
+        resolve(root, args) {
+          return Db.models.processInstance.findAll({ where: args });
         }
       }
     };
@@ -74,7 +78,7 @@ const Mutation = new GraphQLObjectType({
         }
       },
       addProcessInstance: {
-        type: User,
+        type: ProcessInstance,
         args: {
           pcssId: {
             type: new GraphQLNonNull(GraphQLInt)
