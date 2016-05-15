@@ -9,6 +9,8 @@ import {
 import Db from '../db';
 import Post from './post';
 import User from './user';
+import Process from './process';
+import createProcessInstance from '../services/createProcessInstance';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -26,13 +28,19 @@ const Query = new GraphQLObjectType({
           }
         },
         resolve(root, args) {
-          return Db.models.user.findAll({where: args});
+          return Db.models.user.findAll({ where: args });
         }
       },
       posts: {
         type: new GraphQLList(Post),
         resolve(root, args) {
-          return Db.models.post.findAll({where: args});
+          return Db.models.post.findAll({ where: args });
+        }
+      },
+      processes: {
+        type: new GraphQLList(Process),
+        resolve(root, args) {
+          return Db.models.post.findAll({ where: args });
         }
       }
     };
@@ -63,6 +71,26 @@ const Mutation = new GraphQLObjectType({
             lastName: args.lastName,
             email: args.email
           });
+        }
+      },
+      addProcessInstance: {
+        type: User,
+        args: {
+          pcssId: {
+            type: new GraphQLNonNull(GraphQLInt)
+          },
+          userId: {
+            type: new GraphQLNonNull(GraphQLInt)
+          },
+          additionalInfo: {
+            type: new GraphQLNonNull(GraphQLString)
+          }
+        },
+        resolve(_, args) {
+          const { pcssId, userId, additionalInfo } = args;
+          const processModel = Db.models.process;
+
+          return createProcessInstance({ processModel, pcssId, userId, additionalInfo });
         }
       }
     };
