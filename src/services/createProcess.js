@@ -1,12 +1,11 @@
 import Promise from 'bluebird';
-import Sequelize from 'sequelize';
 import Db from '../db';
 
-export default function createProcess({ processModel, processMetaData }) {
+export default function createProcess(processModel, processMetaData) {
 
   let createdActions = [];
 
-  return Db.transaction({type: Sequelize.Transaction.EXCLUSIVE}, async function() {
+  return Db.transaction(async function() {
     const {name, description, actions, startAction} = processMetaData;
 
     const currentProcess = await processModel.create({

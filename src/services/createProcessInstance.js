@@ -1,9 +1,8 @@
-import Sequelize from 'sequelize';
 import Db from '../db';
 import Promise from 'bluebird';
 
 export default function createProcessInstance({ processModel, pcssId, userId, additionalInfo }) {
-  return Db.transaction({type: Sequelize.Transaction.EXCLUSIVE}, async function() {
+  return Db.transaction(async function() {
 
     const dbProcess = await processModel.findById(pcssId);
     const {name, description} = dbProcess.dataValues;
