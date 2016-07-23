@@ -1,5 +1,5 @@
-import Promise from 'bluebird';
 import Db from '../db';
+import Promise from 'bluebird';
 
 export default function createProcess(processModel, processMetaData) {
 

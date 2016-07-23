@@ -34,7 +34,7 @@ const Query = new GraphQLObjectType({
       processes: {
         type: new GraphQLList(Process),
         resolve(root, args) {
-          return Db.models.process.findAll({ where: args });
+          return Db.models.process.findAll({ where: args, group: 'name' });
         }
       },
       processInstances: {

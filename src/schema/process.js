@@ -1,8 +1,10 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } from 'graphql';
+import ProcessInstance from './processInstance';
 
 const Process = new GraphQLObjectType({
   name: 'Process',
@@ -25,6 +27,12 @@ const Process = new GraphQLObjectType({
         type: GraphQLString,
         resolve(pcss) {
           return pcss.description;
+        }
+      },
+      instances: {
+        type: new GraphQLList(ProcessInstance),
+        resolve(process) {
+          return process.getProcessInstances();
         }
       }
     };

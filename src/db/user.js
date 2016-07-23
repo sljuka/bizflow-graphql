@@ -16,6 +16,10 @@ export default function(Conn) {
       validate: {
         isEmail: true
       }
+    },
+    openedProcesses: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   });
 }

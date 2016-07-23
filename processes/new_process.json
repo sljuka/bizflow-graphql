@@ -1,0 +1,66 @@
+{
+  "name": "New process",
+  "description": "This is a new process",
+  "startAction": "Check supplies",
+  "actions": [
+    {
+      "name": "Check supplies",
+      "type": "input",
+      "description": "Checks if all essential supplies are present",
+      "question": "Are all supplies present?",
+      "nextActions": {
+        "notEnaughSupplies": "Get supplies",
+        "enaughSupplies": "Make breakfast"
+      }
+    },
+    {
+      "name": "Get supplies",
+      "type": "task",
+      "description": "Gets all needed supplies",
+      "nextAction": "Make breakfast",
+      "tasks": [
+        {
+          "name": "Get bacon",
+          "roles": ["storage", "kitchen"],
+          "description": "Get some bacon, it's in the fridge or in the store"
+        },
+        {
+          "name": "Get eggs",
+          "roles": ["storage", "kitchen"],
+          "description": "Get some eggs, they are in the fridge or in the store"
+        },
+        {
+          "name": "Get bread",
+          "roles": ["storage", "kitchen"],
+          "description": "Get some bread from the store"
+        }
+      ]
+    },
+    {
+      "name": "Make breakfast",
+      "type": "task",
+      "description": "Make breakfast",
+      "nextAction": "Serve breakfast",
+      "tasks": [
+        {
+          "name": "Make breakfast",
+          "roles": ["kitchen"]
+        }
+      ]
+    },
+    {
+      "name": "Serve breakfast",
+      "type": "task",
+      "tasks": [
+        {
+          "name": "Prepare table",
+          "roles": ["service"]
+        },
+        {
+          "name": "Slice bread",
+          "roles": ["kitchen"]
+        }
+      ]
+    }
+  ]
+}

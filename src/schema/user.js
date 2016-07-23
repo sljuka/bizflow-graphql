@@ -35,6 +35,12 @@ const User = new GraphQLObjectType({
           return user.email;
         }
       },
+      openedProcesses: {
+        type: GraphQLString,
+        resolve(user) {
+          return user.openedProcesses;
+        }
+      },
       posts: {
         type: new GraphQLList(Post),
         resolve(user) {

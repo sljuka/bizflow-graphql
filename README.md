@@ -4,4 +4,11 @@ Trying out graphql :)
 
 build code (transpile):
 
-`babel src --out-dir lib`
+`npm run build`
+
+transpiled code will be stored in /lib
+
+features:
+- [.] better build task naming (`bizflow-process processDslScriptName`) creates process
+- [ ] add new build task `bizflow-update processName`
+- [ ] add openedProcesses to user table
