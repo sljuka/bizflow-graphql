@@ -1,5 +1,6 @@
 import addUser from './addUser';
 import addProcessInstance from './addProcessInstance.js';
+import runInstance from './runInstance';
 import { GraphQLObjectType } from 'graphql';
 
 const Mutation = new GraphQLObjectType({
@@ -8,7 +9,8 @@ const Mutation = new GraphQLObjectType({
   fields() {
     return {
       addUser,
-      addProcessInstance
+      addProcessInstance,
+      runInstance
     };
   }
 });

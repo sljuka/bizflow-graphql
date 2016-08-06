@@ -1,7 +1,9 @@
+import ActionInstance from './actionInstance';
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } from 'graphql';
 
 const ProcessInstance = new GraphQLObjectType({
@@ -31,6 +33,18 @@ const ProcessInstance = new GraphQLObjectType({
         type: GraphQLString,
         resolve(pcss) {
           return pcss.additionalInfo;
+        }
+      },
+      actionInstances: {
+        type: new GraphQLList(ActionInstance),
+        resolve(pcss) {
+          return pcss.getActionInstances();
+        }
+      },
+      startedAt: {
+        type: GraphQLString,
+        resolve(pcss) {
+          return pcss.startedAt;
         }
       }
     };

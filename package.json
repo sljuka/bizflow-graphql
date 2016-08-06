@@ -10,7 +10,8 @@
     "seed": "node ./lib/taskScripts/seed.js",
     "start": "node ./lib/taskScripts/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bizflow-process": "node lib/taskScripts/bizflow-process.js"
+    "bizflow-process": "node lib/taskScripts/bizflow-process.js",
+    "sb": "node lib/taskScripts/test.js"
   },
   "author": "",
   "license": "ISC",

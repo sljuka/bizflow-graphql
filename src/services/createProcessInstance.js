@@ -5,7 +5,7 @@ export default function createProcessInstance({ processModel, pcssId, userId, ad
   return Db.transaction(async function() {
 
     const dbProcess = await processModel.findById(pcssId);
-    const {name, description} = dbProcess.dataValues;
+    const {name, description, startActionId} = dbProcess.dataValues;
 
     const dbProcessInstance = await dbProcess.createProcessInstance({
       name,
@@ -16,7 +16,7 @@ export default function createProcessInstance({ processModel, pcssId, userId, ad
 
     const dbActions = await dbProcess.getActions();
 
-    await createActionInstances(dbProcessInstance, dbActions);
+    await createActionInstances(dbProcessInstance, dbActions, startActionId);
 
     // next actions...
 
@@ -24,7 +24,7 @@ export default function createProcessInstance({ processModel, pcssId, userId, ad
   });
 }
 
-function createActionInstances(processInstance, actions) {
+function createActionInstances(processInstance, actions, startActionId) {
   const actionPromises = actions.map(async function(dbAction) {
     const {id: actionId, type, name, description} = dbAction.dataValues;
 
@@ -34,6 +34,9 @@ function createActionInstances(processInstance, actions) {
       name,
       description
     });
+
+    if (actionId === startActionId)
+      await processInstance.update({ startActionInstanceId: dbActionInstance.id });
 
     const dbTasks = await dbAction.getTasks();
     const taskPromises = dbTasks.map(async function(dbTask) {

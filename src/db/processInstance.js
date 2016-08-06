@@ -17,6 +17,9 @@ export default function(DbConnnection) {
     },
     finishedAt: {
       type: Sequelize.DATE
+    },
+    startActionInstanceId: {
+      type: Sequelize.INTEGER
     }
   });
 }
