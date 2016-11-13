@@ -1,8 +1,6 @@
-require('babel-polyfill');
-
-import Db from '../db';
-import createProcess from '../services/createProcess';
-import { printError, printSuccess } from '../lib/consoleHelper';
+const Db = require('../db');
+const createProcess = require('../services/createProcess');
+const { printError, printSuccess } = require('../lib/consoleHelper');
 
 const args = process.argv.slice(2);
 

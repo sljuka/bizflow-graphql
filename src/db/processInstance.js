@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
+const Sequelize = require('sequelize');
 
-export default function(DbConnnection) {
+module.exports = function(DbConnnection) {
   return DbConnnection.define('processInstance', {
     name: {
       type: Sequelize.STRING,
@@ -22,4 +22,4 @@ export default function(DbConnnection) {
       type: Sequelize.INTEGER
     }
   });
-}
+};

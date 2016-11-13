@@ -1,10 +1,10 @@
-import {
+const ProcessInstance = require('./processInstance');
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLList
-} from 'graphql';
-import ProcessInstance from './processInstance';
+} = require('graphql');
 
 const Process = new GraphQLObjectType({
   name: 'Process',
@@ -39,4 +39,4 @@ const Process = new GraphQLObjectType({
   }
 });
 
-export default Process;
+module.exports = Process;

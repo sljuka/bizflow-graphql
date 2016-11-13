@@ -1,10 +1,9 @@
-import {
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLList
-} from 'graphql';
-import Post from './post';
+} = require('graphql');
 
 const User = new GraphQLObjectType({
   name: 'User',
@@ -42,7 +41,7 @@ const User = new GraphQLObjectType({
         }
       },
       posts: {
-        type: new GraphQLList(Post),
+        type: new GraphQLList(require('./post')),
         resolve(user) {
           return user.getPosts();
         }
@@ -51,4 +50,4 @@ const User = new GraphQLObjectType({
   }
 });
 
-export default User;
+module.exports = User;

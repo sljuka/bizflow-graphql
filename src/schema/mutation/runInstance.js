@@ -1,12 +1,12 @@
-import runInstance from '../../services/runInstance';
-import Db from '../../db';
-import ProcessInstance from '../processInstance';
-import {
+const runInstance = require('../../services/runInstance');
+const Db = require('../../db');
+const ProcessInstance = require('../processInstance');
+const {
   GraphQLInt,
   GraphQLNonNull
-} from 'graphql';
+} = require('graphql');
 
-export default {
+module.exports = {
   type: ProcessInstance,
   args: {
     processInstanceId: { type: new GraphQLNonNull(GraphQLInt) }

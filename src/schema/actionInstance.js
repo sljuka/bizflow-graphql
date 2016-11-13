@@ -1,8 +1,10 @@
-import {
+const graphql = require('graphql');
+
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt
-} from 'graphql';
+} = graphql;
 
 const ActionInstance = new GraphQLObjectType({
   name: 'ActionInstance',
@@ -31,4 +33,4 @@ const ActionInstance = new GraphQLObjectType({
   }
 });
 
-export default ActionInstance;
+module.exports = ActionInstance;

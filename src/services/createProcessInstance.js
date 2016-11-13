@@ -1,7 +1,7 @@
-import Db from '../db';
-import Promise from 'bluebird';
+const Db = require('../db');
+const Promise = require('bluebird');
 
-export default function createProcessInstance({ processModel, pcssId, userId, additionalInfo }) {
+module.exports = function createProcessInstance({ processModel, pcssId, userId, additionalInfo }) {
   return Db.transaction(async function() {
 
     const dbProcess = await processModel.findById(pcssId);
@@ -22,7 +22,7 @@ export default function createProcessInstance({ processModel, pcssId, userId, ad
 
     return dbProcessInstance;
   });
-}
+};
 
 function createActionInstances(processInstance, actions, startActionId) {
   const actionPromises = actions.map(async function(dbAction) {

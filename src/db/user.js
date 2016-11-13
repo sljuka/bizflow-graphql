@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
+const Sequelize = require('sequelize');
 
-export default function(Conn) {
+module.exports = function(Conn) {
   return Conn.define('user', {
     firstName: {
       type: Sequelize.STRING,
@@ -22,4 +22,4 @@ export default function(Conn) {
       allowNull: true
     }
   });
-}
+};

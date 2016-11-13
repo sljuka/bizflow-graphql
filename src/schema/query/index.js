@@ -1,13 +1,16 @@
-import {
-  GraphQLObjectType,
+const graphql = require('graphql');
+const Db = require('../../db');
+const Post = require('../post');
+const User = require('../user');
+const Process = require('../process');
+const ProcessInstance = require('../processInstance');
+
+const {
   GraphQLInt,
-  GraphQLList
-} from 'graphql';
-import Db from '../../db';
-import Post from '../post';
-import User from '../user';
-import Process from '../process';
-import ProcessInstance from '../processInstance';
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLString
+} = graphql;
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -31,10 +34,54 @@ const Query = new GraphQLObjectType({
           return Db.models.post.findAll({ where: args });
         }
       },
+      process: {
+        type: Process,
+        args: {
+          name: {
+            type: GraphQLString
+          }
+        },
+        resolve(root, args) {
+          if (args.name)
+            return Db.models.process.findOne({ where: {name: args.name}, group: 'name' });
+          else
+            throw 'name arg is required';
+        }
+      },
       processes: {
         type: new GraphQLList(Process),
+        args: {
+          names: {
+            type: new GraphQLList(GraphQLString)
+          },
+          searchPattern: {
+            type: GraphQLString
+          }
+        },
         resolve(root, args) {
-          return Db.models.process.findAll({ where: args, group: 'name' });
+          if (args.names)
+            return Db.models.process.findAll({
+              where: { name: args.names },
+              group: 'name',
+              limit: 20
+            });
+
+          else if (args.searchPattern) {
+            const splitNames = args.searchPattern.match(/\S+/g);
+            const likeStatements = splitNames.map(name => ({ name: { $like: `%${name.replace(/\s/g, '')}%` } }));
+
+            return Db.models.process.findAll({
+              where: { $or: likeStatements },
+              order: 'name',
+              group: 'name',
+              limit: 20
+            });
+          }
+          else
+            return Db.models.process.findAll({
+              group: 'name',
+              limit: 20
+            });
         }
       },
       processInstances: {
@@ -47,4 +94,4 @@ const Query = new GraphQLObjectType({
   }
 });
 
-export default Query;
+module.exports = Query;

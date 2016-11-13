@@ -1,10 +1,10 @@
-import ActionInstance from './actionInstance';
-import {
+const ActionInstance = require('./actionInstance');
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLList
-} from 'graphql';
+} = require('graphql');
 
 const ProcessInstance = new GraphQLObjectType({
   name: 'ProcessInstance',
@@ -51,4 +51,4 @@ const ProcessInstance = new GraphQLObjectType({
   }
 });
 
-export default ProcessInstance;
+module.exports = ProcessInstance;

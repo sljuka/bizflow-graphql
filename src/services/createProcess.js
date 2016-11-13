@@ -1,7 +1,7 @@
-import Db from '../db';
-import Promise from 'bluebird';
+const Db = require('../db');
+const Promise = require('bluebird');
 
-export default function createProcess(processModel, processMetaData) {
+module.exports = function createProcess(processModel, processMetaData) {
 
   let createdActions = [];
 
@@ -90,4 +90,4 @@ export default function createProcess(processModel, processMetaData) {
 
     return Promise.all(promises);
   }
-}
+};

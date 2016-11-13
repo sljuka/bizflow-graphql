@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
+const Sequelize = require('sequelize');
 
-export default function(DbConnnection) {
+module.exports = function(DbConnnection) {
   return DbConnnection.define('task', {
     name: {
       type: Sequelize.STRING,
@@ -14,4 +14,4 @@ export default function(DbConnnection) {
       defaultValue: false
     }
   });
-}
+};

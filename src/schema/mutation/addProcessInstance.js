@@ -1,13 +1,13 @@
-import createProcessInstance from '../../services/createProcessInstance';
-import Db from '../../db';
-import ProcessInstance from '../processInstance';
-import {
+const createProcessInstance = require('../../services/createProcessInstance');
+const Db = require('../../db');
+const ProcessInstance = require('../processInstance');
+const {
   GraphQLString,
   GraphQLInt,
   GraphQLNonNull
-} from 'graphql';
+} = require('graphql');
 
-export default {
+module.exports = {
   type: ProcessInstance,
   args: {
     pcssId: {

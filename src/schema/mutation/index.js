@@ -1,7 +1,7 @@
-import addUser from './addUser';
-import addProcessInstance from './addProcessInstance.js';
-import runInstance from './runInstance';
-import { GraphQLObjectType } from 'graphql';
+const addUser = require('./addUser');
+const addProcessInstance = require('./addProcessInstance.js');
+const runInstance = require('./runInstance');
+const { GraphQLObjectType } = require('graphql');
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -15,4 +15,4 @@ const Mutation = new GraphQLObjectType({
   }
 });
 
-export default Mutation;
+module.exports = Mutation;

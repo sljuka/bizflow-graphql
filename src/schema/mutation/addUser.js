@@ -1,11 +1,11 @@
-import Db from '../../db';
-import User from '../user';
-import {
+const Db = require('../../db');
+const User = require('../user');
+const {
   GraphQLString,
   GraphQLNonNull
-} from 'graphql';
+} = require('graphql');
 
-export default {
+module.exports = {
   type: User,
   args: {
     firstName: {

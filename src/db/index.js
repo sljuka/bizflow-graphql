@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import defineModels from './defineModels';
+const Sequelize = require('sequelize');
+const defineModels = require('./defineModels');
 
 // SQLITE SETTINGS
 const Conn = new Sequelize(
@@ -26,4 +26,4 @@ const Conn = new Sequelize(
 
 defineModels(Conn);
 
-export default Conn;
+module.exports = Conn;

@@ -1,15 +1,15 @@
-import defineAction from './action';
-import defineActionHead from './actionHead';
-import defineActionInstance from './actionInstance';
-import defineNextAction from './nextAction';
-import definePost from './post';
-import defineProcess from './process';
-import defineProcessInstance from './processInstance';
-import defineTask from './task';
-import defineTaskInstance from './taskInstance';
-import defineUser from './user';
+const defineAction = require('./action');
+const defineActionHead = require('./actionHead');
+const defineActionInstance = require('./actionInstance');
+const defineNextAction = require('./nextAction');
+const definePost = require('./post');
+const defineProcess = require('./process');
+const defineProcessInstance = require('./processInstance');
+const defineTask = require('./task');
+const defineTaskInstance = require('./taskInstance');
+const defineUser = require('./user');
 
-export default function(Conn) {
+module.exports = function(Conn) {
   const Action = defineAction(Conn);
   const ActionHead = defineActionHead(Conn);
   const ActionInstance = defineActionInstance(Conn);
@@ -46,4 +46,4 @@ export default function(Conn) {
   User.hasMany(Post);
   User.hasMany(ProcessInstance, {as: 'createdProcesses', foreignKey: 'creatorId'});
   User.hasMany(TaskInstance, {as: 'assignedTasks', foreignKey: 'assigneeId'});
-}
+};

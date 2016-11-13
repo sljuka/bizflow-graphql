@@ -1,6 +1,6 @@
-import Db from '../db';
+const Db = require('../db');
 
-export default function runInstance({ processInstanceModel, processInstanceId }) {
+module.exports = function runInstance({ processInstanceModel, processInstanceId }) {
   return Db.transaction(async function() {
     const processInstance = await processInstanceModel.findById(processInstanceId);
     const currentDate = Date.now();
@@ -16,4 +16,4 @@ export default function runInstance({ processInstanceModel, processInstanceId })
 
     return processInstance;
   });
-}
+};

@@ -1,6 +1,6 @@
-import Conn from '../db';
-import _ from 'lodash';
-import Faker from 'faker';
+const Conn = require('../db');
+const _ = require('lodash');
+const Faker = require('faker');
 
 _.times(10, () => {
   return Conn.models.user.create({
