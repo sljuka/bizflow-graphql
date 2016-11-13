@@ -6,7 +6,6 @@ module.exports = function createProcessInstance({ processModel, pcssId, userId, 
 
     const dbProcess = await processModel.findById(pcssId);
     const {name, description, startActionId} = dbProcess.dataValues;
-
     const dbProcessInstance = await dbProcess.createProcessInstance({
       name,
       description,

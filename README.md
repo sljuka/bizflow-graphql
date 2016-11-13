@@ -1,6 +1,6 @@
 # bizflow-graphql
 
-This project is intended as a test backend for bizflow project.
+This project is intended as a test webapi for Bizflow project.
 
 ## Try it out
 
