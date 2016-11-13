@@ -1,5 +1,5 @@
-const addUser = require('./addUser');
 const addProcessInstance = require('./addProcessInstance.js');
+const addUser = require('./addUser');
 const runInstance = require('./runInstance');
 const { GraphQLObjectType } = require('graphql');
 

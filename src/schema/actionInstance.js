@@ -1,10 +1,8 @@
-const graphql = require('graphql');
-
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt
-} = graphql;
+} = require('graphql');
 
 const ActionInstance = new GraphQLObjectType({
   name: 'ActionInstance',

@@ -1,9 +1,9 @@
-const graphql = require('graphql');
 const Db = require('../../db');
+const graphql = require('graphql');
 const Post = require('../post');
-const User = require('../user');
 const Process = require('../process');
 const ProcessInstance = require('../processInstance');
+const User = require('../user');
 
 const {
   GraphQLInt,
