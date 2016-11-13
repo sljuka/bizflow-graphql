@@ -1,20 +1,24 @@
 # bizflow-graphql
 
-Trying out graphql :)
+This project is intended as a test backend for bizflow project.
 
-build code (transpile):
+## Try it out
 
-`npm run build`
+Clone this repo:
 
-transpiled code will be stored in /lib.
+`git clone https://github.com/sljuka/bizflow-graphql.git`
 
-To create a sqlite database (or renew) use this command:
+Install dependencies:
 
-`npm createDb`
+`npm i`
+
+Create an initial database (SQLite):
+
+`npm run createDb`
 
 Seed with following command:
 
-`npm seed`
+`npm run seed`
 
 Start dev server
 
