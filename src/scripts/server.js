@@ -7,7 +7,7 @@ const APP_PORT = 8000;
 
 const app = Express();
 
-app.use('/graphql', GraphHTTP({
+app.use('/', GraphHTTP({
   context: dataLoaders(),
   graphiql: true,
   pretty: true,
