@@ -1,4 +1,3 @@
-const dataLoaders = require('../dataLoaders');
 const graphql = require('graphql');
 const postsQuery = require('./posts');
 const processesQuery = require('./processes');
@@ -8,17 +7,15 @@ const usersQuery = require('./users');
 
 const { GraphQLObjectType } = graphql;
 
-const loaders = dataLoaders();
-
 const Query = new GraphQLObjectType({
   name: 'RootQuery',
   description: '...:::rooT Query:::...',
   fields: () => {
     return {
-      users: usersQuery(loaders),
+      users: usersQuery(),
       posts: postsQuery(),
       process: processQuery(),
-      processes: processesQuery(loaders),
+      processes: processesQuery(),
       instances: instanceQuery()
     };
   }

@@ -7,7 +7,7 @@ const {
   GraphQLList
 } = graphql;
 
-module.exports = function processesQuery(dataLoaders) {
+module.exports = function processesQuery() {
   return {
     type: new GraphQLList(Process),
     args: {
@@ -18,7 +18,7 @@ module.exports = function processesQuery(dataLoaders) {
         type: GraphQLString
       }
     },
-    resolve: async (root, args) => {
+    resolve: async (root, args, dataLoaders) => {
       if (args.names)
         return Db.models.process.findAll({
           where: { name: args.names },

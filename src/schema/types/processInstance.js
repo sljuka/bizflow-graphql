@@ -31,6 +31,12 @@ const ProcessInstance = new GraphQLObjectType({
         resolve(pcss) {
           return pcss.getActionInstances();
         }
+      },
+      process: {
+        type: require('./process'),
+        resolve(actionInstance, _args, dataLoaders) {
+          return dataLoaders('process').load(actionInstance.processId);
+        }
       }
     };
   }

@@ -7,7 +7,7 @@ const {
   GraphQLList,
 } = graphql;
 
-module.exports = function usersQuery(dataLoaders) {
+module.exports = function usersQuery() {
   return {
     type: new GraphQLList(User),
     args: {
@@ -16,7 +16,7 @@ module.exports = function usersQuery(dataLoaders) {
       limit: { type: GraphQLInt },
       offset: { type: GraphQLInt }
     },
-    resolve: async (root, args) => {
+    resolve: async (root, args, dataLoaders) => {
       const {id, ids, limit, offset} = args;
       let keys = [];
 
