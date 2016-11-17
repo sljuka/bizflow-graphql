@@ -4,19 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "bizflow-process-production": "NODE_ENV=production node --harmony-async-await src/scripts/bizflow-process.js",
+    "bizflow-process-test": "NODE_ENV=test node --harmony-async-await src/scripts/bizflow-process.js",
+    "bizflow-process": "NODE_ENV=development node --harmony-async-await src/scripts/bizflow-process.js",
     "browseDb": "sqlite3 ./src/db/database.sqlite",
-    "createDb": "node --harmony-async-await ./src/scripts/syncDb.js",
-    "seed": "node --harmony-async-await ./src/scripts/seed.js",
-    "start": "node --harmony-async-await ./src/scripts/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bizflow-process": "node --harmony-async-await src/scripts/bizflow-process.js",
-    "sb": "node src/scripts/test.js"
+    "createDb-production": "NODE_ENV=production node --harmony-async-await ./src/scripts/syncDb.js",
+    "createDb-test": "NODE_ENV=test node --harmony-async-await ./src/scripts/syncDb.js",
+    "createDb": "NODE_ENV=development node --harmony-async-await ./src/scripts/syncDb.js",
+    "seed-test": "NODE_ENV=test node --harmony-async-await ./src/scripts/seed.js",
+    "seed": "NODE_ENV=development node --harmony-async-await ./src/scripts/seed.js",
+    "start-production": "NODE_ENV=production node --harmony-async-await ./src/scripts/server.js",
+    "start-test": "NODE_ENV=test node --harmony-async-await ./src/scripts/server.js",
+    "start": "NODE_ENV=development node --harmony-async-await ./src/scripts/server.js",
+    "test": "npm run createDb-test; NODE_ENV=test mocha --harmony-async-await"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.5",
     "colors": "^1.1.2",
+    "dataloader": "^1.2.0",
     "eslint": "^3.10.0",
     "express": "^4.13.4",
     "express-graphql": "^0.6.1",
@@ -35,7 +42,9 @@
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
+    "chai": "^3.5.0",
     "eslint": "^3.10.0",
-    "eslint-plugin-babel": "^3.3.0"
+    "eslint-plugin-babel": "^3.3.0",
+    "mocha": "^3.1.2"
   }
 }

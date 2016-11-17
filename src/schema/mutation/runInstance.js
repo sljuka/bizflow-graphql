@@ -1,5 +1,5 @@
 const Db = require('../../db');
-const ProcessInstance = require('../processInstance');
+const ProcessInstance = require('../types/processInstance');
 const runInstance = require('../../services/runInstance');
 const {
   GraphQLInt,

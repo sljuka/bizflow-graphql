@@ -12,28 +12,19 @@ const ProcessInstance = new GraphQLObjectType({
   fields: () => {
     return {
       id: {
-        type: GraphQLInt,
-        resolve(pcss) {
-          return pcss.id;
-        }
+        type: GraphQLInt
       },
       name: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.name;
-        }
+        type: GraphQLString
       },
       description: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.description;
-        }
+        type: GraphQLString
       },
       additionalInfo: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.additionalInfo;
-        }
+        type: GraphQLString
+      },
+      startedAt: {
+        type: GraphQLString
       },
       actionInstances: {
         type: new GraphQLList(ActionInstance),
@@ -41,10 +32,10 @@ const ProcessInstance = new GraphQLObjectType({
           return pcss.getActionInstances();
         }
       },
-      startedAt: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.startedAt;
+      process: {
+        type: require('./process'),
+        resolve(actionInstance, _args, dataLoaders) {
+          return dataLoaders('process').load(actionInstance.processId);
         }
       }
     };

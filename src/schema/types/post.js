@@ -10,22 +10,13 @@ const Post = new GraphQLObjectType({
   description: 'This is a Post',
   fields: () => ({
     id: {
-      type: GraphQLInt,
-      resolve(post) {
-        return post.id;
-      }
+      type: GraphQLInt
     },
     title: {
-      type: GraphQLString,
-      resolve(post) {
-        return post.title;
-      }
+      type: GraphQLString
     },
     content: {
-      type: GraphQLString,
-      resolve(post) {
-        return post.content;
-      }
+      type: GraphQLString
     },
     author: {
       type: User,

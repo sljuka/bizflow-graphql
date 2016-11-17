@@ -7,32 +7,20 @@ const {
 
 const User = new GraphQLObjectType({
   name: 'User',
-  description: 'This represents a system user',
+  description: 'This represents a user',
   fields: () => {
     return {
       id: {
-        type: GraphQLInt,
-        resolve(user) {
-          return user.id;
-        }
+        type: GraphQLInt
       },
       firstName: {
-        type: GraphQLString,
-        resolve(user) {
-          return user.firstName;
-        }
+        type: GraphQLString
       },
       lastName: {
-        type: GraphQLString,
-        resolve(user) {
-          return user.lastName;
-        }
+        type: GraphQLString
       },
       email: {
-        type: GraphQLString,
-        resolve(user) {
-          return user.email;
-        }
+        type: GraphQLString
       },
       openedProcesses: {
         type: GraphQLString,

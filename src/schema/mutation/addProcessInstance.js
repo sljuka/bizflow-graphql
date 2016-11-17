@@ -1,6 +1,6 @@
 const createProcessInstance = require('../../services/createProcessInstance');
 const Db = require('../../db');
-const ProcessInstance = require('../processInstance');
+const ProcessInstance = require('../types/processInstance');
 const {
   GraphQLString,
   GraphQLInt,

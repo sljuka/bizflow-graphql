@@ -1,5 +1,5 @@
 const Db = require('../../db');
-const User = require('../user');
+const User = require('../types/user');
 const {
   GraphQLString,
   GraphQLNonNull

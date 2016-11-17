@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const defineModels = require('./defineModels');
 
+const env = process.env.NODE_ENV;
+
 // SQLITE SETTINGS
 const Conn = new Sequelize(
   'relay',
@@ -9,7 +11,7 @@ const Conn = new Sequelize(
   {
     dialect: 'sqlite',
     host: 'localhost',
-    storage: `${__dirname}/database.sqlite`
+    storage: `${__dirname}/database-${env}.sqlite`
   }
 );
 
