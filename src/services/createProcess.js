@@ -8,19 +8,21 @@ module.exports = function createProcess(processModel, processMetaData) {
   return Db.transaction(async function() {
     const {name, description, actions, startAction} = processMetaData;
 
-    const currentProcess = await processModel.create({
+    const createdProcess = await processModel.create({
       name,
       description
     });
 
-    await createActions(currentProcess, actions);
+    await createActions(createdProcess, actions);
 
     const persistedStartAction = createdActions.find(item => item.dataValues.name === startAction);
-    await currentProcess.update({
+    await createdProcess.update({
       startActionId: persistedStartAction.dataValues.id
     });
 
     await linkActions(actions, createdActions);
+
+    return createdProcess.reload();
   });
 
   function createActions(pcss, actionsMeta) {

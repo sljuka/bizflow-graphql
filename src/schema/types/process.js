@@ -12,27 +12,18 @@ const Process = new GraphQLObjectType({
   fields: () => {
     return {
       id: {
-        type: GraphQLInt,
-        resolve(pcss) {
-          return pcss.id;
-        }
+        type: GraphQLInt
       },
       name: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.name;
-        }
+        type: GraphQLString
       },
       description: {
-        type: GraphQLString,
-        resolve(pcss) {
-          return pcss.description;
-        }
+        type: GraphQLString
       },
       instances: {
         type: new GraphQLList(ProcessInstance),
-        resolve(process) {
-          return process.getProcessInstances();
+        resolve(pcss, args, loaders) {
+          return loaders('processInstance').load(pcss.id);
         }
       }
     };
