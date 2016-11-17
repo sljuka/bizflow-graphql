@@ -49,7 +49,7 @@ module.exports = () => {
       if (!dataLoaders[name]) throw `Data loader with name ${name} does not exist`;
 
       loadedDataLoaders[name] = dataLoaders[name]();
-      console.log(`INIT::: ${name} data loader`);
+      console.log(`INIT::: ${name} data loader`); // eslint-disable-line no-console
     }
 
     return loadedDataLoaders[name];
