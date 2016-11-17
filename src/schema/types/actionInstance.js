@@ -10,22 +10,13 @@ const ActionInstance = new GraphQLObjectType({
   fields: () => {
     return {
       id: {
-        type: GraphQLInt,
-        resolve(actionInstance) {
-          return actionInstance.id;
-        }
+        type: GraphQLInt
       },
       name: {
-        type: GraphQLString,
-        resolve(actionInstance) {
-          return actionInstance.name;
-        }
+        type: GraphQLString
       },
       description: {
-        type: GraphQLString,
-        resolve(actionInstance) {
-          return actionInstance.description;
-        }
+        type: GraphQLString
       }
     };
   }
