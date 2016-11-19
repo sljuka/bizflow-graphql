@@ -8,9 +8,6 @@ module.exports = function(DbConnnection) {
     },
     description: {
       type: Sequelize.STRING
-    },
-    startActionId: {
-      type: Sequelize.INTEGER
     }
   });
 };

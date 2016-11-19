@@ -5,9 +5,15 @@ module.exports = function createProcessInstance({ processModel, processId, userI
   return Db.transaction(async function() {
     const dbProcess = await processModel.findOne({
       where: { id: processId },
-      include: [Db.models.action]
+      include: [
+        Db.models.action,
+        {
+          model: Db.models.action,
+          as: 'startAction'
+        }
+      ]
     });
-    const {name, description, startActionId} = dbProcess.dataValues;
+    const {name, description, startAction} = dbProcess.dataValues;
     const dbProcessInstance = await dbProcess.createProcessInstance({
       name,
       description,
@@ -17,7 +23,7 @@ module.exports = function createProcessInstance({ processModel, processId, userI
 
     const dbActions = dbProcess.actions;
 
-    const dbActionInstances = await createActionInstances(dbProcessInstance, dbActions, startActionId);
+    const dbActionInstances = await createActionInstances(dbProcessInstance, dbActions, startAction.dataValues.id);
 
     await linkActionInstances(dbActionInstances);
 
@@ -25,11 +31,11 @@ module.exports = function createProcessInstance({ processModel, processId, userI
   });
 };
 
-function createActionInstances(processInstance, actions, startActionId) {
+function createActionInstances(dbProcessInstance, actions, startActionId) {
   return Promise.all(actions.map(async function(dbAction) {
     const {id: actionId, type, name, description} = dbAction.dataValues;
 
-    const dbActionInstance = await processInstance.createActionInstance({
+    const dbActionInstance = await dbProcessInstance.createActionInstance({
       actionId,
       type,
       name,
@@ -37,7 +43,7 @@ function createActionInstances(processInstance, actions, startActionId) {
     });
 
     if (actionId === startActionId)
-      await processInstance.update({ startActionInstanceId: dbActionInstance.id });
+      await dbProcessInstance.update({ startActionInstanceId: dbActionInstance.dataValues.id });
 
     return dbActionInstance;
   }));

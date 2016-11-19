@@ -42,9 +42,11 @@ module.exports = function(Conn) {
   Post.belongsTo(User);
   Process.hasMany(Action);
   Process.hasMany(ProcessInstance);
+  Process.hasOne(Action, {as: 'startAction'});
   ProcessInstance.belongsTo(User, {as: 'creator'});
   ProcessInstance.hasMany(ActionInstance);
   ProcessInstance.hasOne(ActionHead);
+  ProcessInstance.hasOne(ActionInstance, {as: 'startActionInstance'});
   ProcessInstance.belongsTo(Process);
   Task.belongsTo(Action);
   TaskInstance.belongsTo(ActionInstance);

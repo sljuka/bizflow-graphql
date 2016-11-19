@@ -10,12 +10,18 @@ describe('Create process service', function() {
     // prepare test process
     const processMeta = require('./processes/breakfast_process.json');
     await createProcess(Db.models.process, processMeta);
-    const process = await Db.models.process.find({ where: { id: 1 } });
+    const process = await Db.models.process.find({
+      where: { id: 1 },
+      include: {
+        model: Db.models.action,
+        as: 'startAction'
+      }
+    });
 
     const {
       description: processDescription,
       name: processName,
-      startActionId: processStartActionId
+      startAction
     } = process.dataValues;
 
     // Check process data
@@ -38,7 +44,7 @@ describe('Create process service', function() {
     ]);
 
     // Check if startAction is set
-    assert.equal(processStartActionId, 1);
+    assert.equal(startAction.dataValues.id, 1);
 
     // Check if nextActions are set
     const nextActions = await Db.models.nextAction.findAll()
