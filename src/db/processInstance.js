@@ -17,9 +17,6 @@ module.exports = function(DbConnnection) {
     },
     finishedAt: {
       type: Sequelize.DATE
-    },
-    startActionInstanceId: {
-      type: Sequelize.INTEGER
     }
   });
 };
