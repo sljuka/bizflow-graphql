@@ -2,52 +2,41 @@ const Db = require('../db');
 const Promise = require('bluebird');
 
 module.exports = function createProcess(processModel, processMetaData) {
-
-  let createdActions = [];
-
   return Db.transaction(async function() {
-    const {name, description, actions, startAction} = processMetaData;
+    const {name, description, actions: actionsMeta, startAction} = processMetaData;
 
-    const createdProcess = await processModel.create({
-      name,
-      description
-    });
+    const dbProcess = await processModel.create({ name, description });
 
-    await createActions(createdProcess, actions);
+    const dbActions = await createActions(dbProcess, actionsMeta);
 
-    const persistedStartAction = createdActions.find(item => item.dataValues.name === startAction);
-    await createdProcess.update({
-      startActionId: persistedStartAction.dataValues.id
-    });
+    const persistedStartAction = dbActions.find(({ dataValues: { name } }) => name === startAction);
+    await dbProcess.update({ startActionId: persistedStartAction.dataValues.id });
 
-    await linkActions(actions, createdActions);
+    await linkActions(actionsMeta, dbActions);
 
-    return createdProcess.reload();
+    return await dbProcess.reload();
   });
 
-  function createActions(pcss, actionsMeta) {
-    const promises = actionsMeta.map(actionMeta => createAction(pcss, actionMeta));
+  function createActions(dbProcess, actionsMeta) {
+    const promises = actionsMeta.map(actionMeta => createAction(dbProcess, actionMeta));
 
     return Promise.all(promises);
   }
 
-  async function createAction(pcss, actionMeta) {
-    const {name, description, tasks, type, question} = actionMeta;
+  async function createAction(dbProcess, actionMeta) {
+    const { name, description, tasks, type, question } = actionMeta;
 
-    const action = await pcss.createAction({
+    const action = await dbProcess.createAction({
       name,
       description: description || name,
       type,
       question
     });
 
-    createdActions.push(action);
+    if (tasks && tasks.length > 0)
+      await Promise.all(tasks.map(taskMeta => createTask(action, taskMeta)));
 
-    if (!tasks) return Promise.resolve();
-
-    const promises = tasks.map(taskMeta => createTask(action, taskMeta));
-
-    return Promise.all(promises);
+    return action;
   }
 
   function createTask(action, taskMeta) {
@@ -60,32 +49,35 @@ module.exports = function createProcess(processModel, processMetaData) {
   }
 
   function linkActions(actionsMeta, createdActions) {
-    const promises = actionsMeta.map((actionMeta) => {
-      const {name, nextActions, nextAction} = actionMeta;
+    const promises = actionsMeta.map(actionMeta => {
+      const {
+        name: metaName,
+        nextActions: metaNextActions,
+        nextAction: metaNextAction
+      } = actionMeta;
 
-      const currentAction = createdActions.find((item) => item.dataValues.name === name);
+      const currentAction = createdActions.find(item => item.dataValues.name === metaName);
 
-      if (nextAction && nextActions) throw 'nextAction and nextActions, only one of these can be defined';
+      if (metaNextAction && metaNextActions) throw 'nextAction and nextActions, only one of these can be defined';
 
-      if (nextActions) {
-        const promises = Object.keys(nextActions).map((key) => {
-          const nextActionName = nextActions[key];
+      if (metaNextActions) {
+        const promises = Object.keys(metaNextActions).map((key) => {
+          const nextActionName = metaNextActions[key];
           const persistedNextAction = createdActions.find(item => item.dataValues.name === nextActionName);
 
           return currentAction.createNextAction({
             key,
-            nextActionId: persistedNextAction.dataValues.id
+            nextActionId: persistedNextAction.id
           });
         });
 
         return Promise.all(promises);
       }
-
-      if (nextAction) {
-        const persistedNextAction = createdActions.find((item) => item.dataValues.name === nextAction);
+      else if (metaNextAction) {
+        const persistedNextAction = createdActions.find((item) => item.dataValues.name === metaNextAction);
 
         return currentAction.createNextAction({
-          nextActionId: persistedNextAction.dataValues.id
+          nextActionId: persistedNextAction.id
         });
       }
     });

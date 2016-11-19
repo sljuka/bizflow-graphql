@@ -1,6 +1,6 @@
 {
   "name": "Breakfast process",
-  "description": "This is my process",
+  "description": "This is a sample process",
   "startAction": "Check supplies",
   "actions": [
     {

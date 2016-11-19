@@ -11,7 +11,8 @@ const Conn = new Sequelize(
   {
     dialect: 'sqlite',
     host: 'localhost',
-    storage: `${__dirname}/database-${env}.sqlite`
+    storage: `${__dirname}/database-${env}.sqlite`,
+    logging: false
   }
 );
 

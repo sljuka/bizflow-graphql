@@ -2,6 +2,7 @@ const defineAction = require('./action');
 const defineActionHead = require('./actionHead');
 const defineActionInstance = require('./actionInstance');
 const defineNextAction = require('./nextAction');
+const defineNextActionInstance = require('./nextActionInstance');
 const definePost = require('./post');
 const defineProcess = require('./process');
 const defineProcessInstance = require('./processInstance');
@@ -14,6 +15,7 @@ module.exports = function(Conn) {
   const ActionHead = defineActionHead(Conn);
   const ActionInstance = defineActionInstance(Conn);
   const NextAction = defineNextAction(Conn);
+  const NextActionInstance = defineNextActionInstance(Conn);
   const Post = definePost(Conn);
   const Process = defineProcess(Conn);
   const ProcessInstance = defineProcessInstance(Conn);
@@ -23,15 +25,20 @@ module.exports = function(Conn) {
 
   // Relationships
   Action.belongsTo(Process);
+  Action.hasMany(ActionInstance);
   Action.hasMany(NextAction);
   Action.hasMany(Task);
   ActionHead.belongsTo(ActionInstance);
   ActionHead.belongsTo(ProcessInstance);
+  ActionInstance.belongsTo(Action);
   ActionInstance.belongsTo(ProcessInstance);
+  ActionInstance.hasMany(NextActionInstance);
   ActionInstance.hasMany(TaskInstance);
   ActionInstance.hasOne(ActionHead);
   NextAction.belongsTo(Action, {as: 'nextAction'});
   NextAction.belongsTo(Action);
+  NextActionInstance.belongsTo(ActionInstance, {as: 'nextActionInstance'});
+  NextActionInstance.belongsTo(ActionInstance);
   Post.belongsTo(User);
   Process.hasMany(Action);
   Process.hasMany(ProcessInstance);

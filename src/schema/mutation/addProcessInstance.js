@@ -10,7 +10,7 @@ const {
 module.exports = {
   type: ProcessInstance,
   args: {
-    pcssId: {
+    processId: {
       type: new GraphQLNonNull(GraphQLInt)
     },
     userId: {
@@ -21,9 +21,9 @@ module.exports = {
     }
   },
   resolve(_, args) {
-    const { pcssId, userId, additionalInfo } = args;
+    const { processId, userId, additionalInfo } = args;
     const processModel = Db.models.process;
 
-    return createProcessInstance({ processModel, pcssId, userId, additionalInfo });
+    return createProcessInstance({ processModel, processId, userId, additionalInfo });
   }
 };
